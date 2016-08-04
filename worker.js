@@ -17,7 +17,7 @@ console.log('pipe_r:', pipe_r, 'pipe_w:', pipe_w);
 var buf = ctypes.char.array(10)();
 var i = 0;
 eintr_retry:
-while(i < 1000) {
+while(i < 100) {
 	console.time('read');
 	var rez_read = read(pipe_r, buf, buf.constructor.size);
 	console.timeEnd('read');
