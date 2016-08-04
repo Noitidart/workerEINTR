@@ -23,7 +23,7 @@ while(i < 1000) {
 	console.timeEnd('read');
 	console.log('rez_read:', rez_read);
 	if (rez_read.toString() === '-1') {
-		if (parseInt(rez_read.toString()) === 4) {
+		if (ctypes.errno === 4) {
 			console.warn('got eintr on try:', i);
 		} else {
 			throw new Error('failed to `read`, errno: ' + ctypes.errno);
