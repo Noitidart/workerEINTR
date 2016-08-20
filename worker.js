@@ -14,12 +14,19 @@ var pipe_r = pfd[0];
 var pipe_w = pfd[1];
 console.log('pipe_r:', pipe_r, 'pipe_w:', pipe_w);
 
-var buf = ctypes.char.array(10)();
-var rez_read = read(pipe_r, buf, buf.constructor.size);
-console.log('rez_read:', rez_read);
-if (rez_read.toString() === '-1') {
-	throw new Error('failed to `read`, errno: ' + ctypes.errno);
-} else {
-	var len = rez_read;
-	console.log('succesfully read, len:', len);
+var i=0;
+while (i++<100) {
+	var buf = ctypes.char.array(10)();
+	var rez_read = read(pipe_r, buf, buf.constructor.size);
+	console.log('rez_read:', rez_read);
+	if (rez_read.toString() === '-1') {
+		if (ctypes.errno === 4) {
+		    console.warn('got EINTR');
+		} else {
+			throw new Error('failed to `read`, for non-EINTR errno: ' + ctypes.errno);
+		}
+	} else {
+		var len = rez_read;
+		console.log('succesfully read, len:', len);
+	}
 }
