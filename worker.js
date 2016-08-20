@@ -18,7 +18,6 @@ var i=0;
 while (i++<100) {
 	var buf = ctypes.char.array(10)();
 	var rez_read = read(pipe_r, buf, buf.constructor.size);
-	console.log('rez_read:', rez_read);
 	if (rez_read.toString() === '-1') {
 		if (ctypes.errno === 4) {
 		    console.warn('got EINTR');
